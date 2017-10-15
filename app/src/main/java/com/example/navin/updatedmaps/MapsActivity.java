@@ -82,6 +82,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(mo);
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng)); //Remove if multiple results
                 Log.i("Destination", "Place: "+place.getName());
+
+                /*
+                Object dataTransfer = new Object[3];
+                url = getDirectionsUrl(latitude, longitude, end_latitude, end_longitude);
+                GetDirectionsData getDirectionsData = new GetDirectionsData();
+                dataTransfer[0] = mMap;
+                dataTransfer[1] = url;
+                dataTransfer[2] = new LatLng(end_latitude,end_longitude);
+
+                getDirectionsData.execute(dataTransfer);
+                 */
+
             }
 
             @Override
@@ -273,7 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.B_to:
                 dataTransfer = new Object[3];
-                url = getDirectionsUrl();
+                url = getDirectionsUrl(latitude, longitude, end_latitude, end_longitude);
                 GetDirectionsData getDirectionsData = new GetDirectionsData();
                 dataTransfer[0] = mMap;
                 dataTransfer[1] = url;
@@ -297,6 +309,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    private String getDirectionsUrl(double A_lat, double A_lng, double B_lat, double B_lng){
+        StringBuilder googleDirectionsUrl = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
+        googleDirectionsUrl.append("origin="+A_lat+","+A_lng);
+        googleDirectionsUrl.append("&destination="+B_lat+","+B_lng);
+        googleDirectionsUrl.append("&key="+"AIzaSyCeko4AxuvPO6rJULEUH5ee4HfDyLSK0qU");
+
+        return googleDirectionsUrl.toString();
+    }
+
+    /*
+
     private String getDirectionsUrl(){
         StringBuilder googleDirectionsUrl = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
         googleDirectionsUrl.append("origin="+latitude+","+longitude);
@@ -305,6 +328,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return googleDirectionsUrl.toString();
     }
+
+     */
 
     private String getUrl(double latitude, double longitude, String nearbyPlace){
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");

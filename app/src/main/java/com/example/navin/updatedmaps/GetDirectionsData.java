@@ -59,4 +59,12 @@ public class GetDirectionsData extends AsyncTask<Object, String, String> {
 
         mMap.addMarker(markerOptions);
     }
+
+    public String getDuration(){
+        return duration;
+    }
+
+    public String getDistance(){
+        return distance;
+    }
 }
