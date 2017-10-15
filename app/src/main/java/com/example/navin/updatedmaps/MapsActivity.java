@@ -55,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double latitude, longitude;
     double end_latitude, end_longitude;
     PlaceAutocompleteFragment autocompleteFragment;
-    LatLng destLatLng;
+    LatLng destLatLng, trainLatLng;
 
 
     public static final int REQUEST_LOCATION_CODE = 99;
@@ -75,8 +75,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onPlaceSelected(Place place) {
 
+                MarkerOptions mo = new MarkerOptions();
+                LatLng latLng = place.getLatLng();
+                mo.position(latLng);
+                mo.title("Search Results");
+                mMap.addMarker(mo);
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng)); //Remove if multiple results
                 Log.i("Destination", "Place: "+place.getName());
-                destLatLng = place.getLatLng();
             }
 
             @Override
@@ -135,6 +140,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+        //Remove the IF and ELSE
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMarkerDragListener(this);
@@ -220,35 +227,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void goSearch(View view) {
         switch (view.getId())
         {
-            case R.id.B_search:
+            /*case R.id.B_search:
                 {
-                EditText tf_location = (EditText) findViewById(R.id.TF_location);
-                String location = tf_location.getText().toString();
+//                EditText tf_location = (EditText) findViewById(R.id.TF_location);
+//                String location = tf_location.getText().toString();
 
-                List<Address> addressList = null;
+//                List<Address> addressList = null;
                 MarkerOptions mo = new MarkerOptions();
 
-                if (!location.equals("")){
-                    Geocoder geocoder = new Geocoder(this);
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 5);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                if (!location.equals("")){
+//                    Geocoder geocoder = new Geocoder(this);
+//                    try {
+//                        addressList = geocoder.getFromLocationName(location, 5);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
 
                     //Check size of addressList
-                    for (int i=0; i<addressList.size(); i++){
-                        Address myAddress = addressList.get(i);
-                        LatLng latLng = new LatLng(myAddress.getLatitude(),myAddress.getLongitude());
-                        mo.position(latLng);
-                        mo.title("Search Results");
-                        mMap.addMarker(mo);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng)); //Remove if multiple results
-                    }
-                }
+//                    for (int i=0; i<addressList.size(); i++){
+//                        Address myAddress = addressList.get(i);
+//                        LatLng latLng = new LatLng(myAddress.getLatitude(),myAddress.getLongitude());
+//                        mo.position(latLng);
+//                        mo.title("Search Results");
+//                        mMap.addMarker(mo);
+//                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng)); //Remove if multiple results
+//                    }
+//                }
 
             }
-            break;
+            break;*/
 
             case R.id.B_station:
                 mMap.clear();
@@ -260,6 +267,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(dataTransfer);
+                trainLatLng = getNearbyPlacesData.getLatLng(); //GETS THE LOCATION OF THE TRAIN STATION
                 Toast.makeText(MapsActivity.this, "Showing Nearby Train Stations", Toast.LENGTH_LONG).show();
                 break;
 

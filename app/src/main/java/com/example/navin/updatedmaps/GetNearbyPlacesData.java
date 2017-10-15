@@ -21,6 +21,8 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     String googlePlacesData;
     GoogleMap mMap;
     String url;
+    double lat, lng;
+    LatLng latLng;
 
     @Override
     protected String doInBackground(Object... params) {
@@ -55,10 +57,10 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
             String placeName = googlePlace.get("place_name");
             String vicinity = googlePlace.get("vicinity");
-            double lat = Double.parseDouble(googlePlace.get("lat"));
-            double lng = Double.parseDouble(googlePlace.get("lng"));
+            lat = Double.parseDouble(googlePlace.get("lat"));
+            lng = Double.parseDouble(googlePlace.get("lng"));
 
-            LatLng latLng = new LatLng(lat, lng);
+            latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName + ":" + vicinity);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
@@ -86,5 +88,10 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
         }*/
+    }
+
+    public LatLng getLatLng(){
+
+        return latLng;
     }
 }
