@@ -309,6 +309,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /*public static LatLng findNearestStation(double lat, double lng){
+
+        LatLng nearestTrainLatLng;
+
+        AdditionalData additionalData = new AdditionalData();
+        String keyType = "train_station";
+        String trainUrl = additionalData.getNearbyTrainUrl(lat, lng, keyType);
+
+        Object dataTransfer[] = new Object[2];
+        dataTransfer[0] = mMap;
+        dataTransfer[1] = trainUrl;
+
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        getNearbyPlacesData.execute(dataTransfer);
+        nearestTrainLatLng = getNearbyPlacesData.getLatLng();
+
+        return null;
+    }*/
+
     private String getDirectionsUrl(double A_lat, double A_lng, double B_lat, double B_lng){
         StringBuilder googleDirectionsUrl = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
         googleDirectionsUrl.append("origin="+A_lat+","+A_lng);
